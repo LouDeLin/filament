@@ -68,8 +68,8 @@ if (CCACHE_PROGRAM)
     set(C_LAUNCHER   "${CCACHE_PROGRAM}")
     set(CXX_LAUNCHER "${CCACHE_PROGRAM}")
 
-    configure_file(build/launch-c.in   launch-c)
-    configure_file(build/launch-cxx.in launch-cxx)
+    configure_file(config/launch-c.in   launch-c)
+    configure_file(config/launch-cxx.in launch-cxx)
 
     execute_process(COMMAND chmod a+rx
         "${CMAKE_BINARY_DIR}/launch-c"
@@ -413,7 +413,7 @@ endif()
 
 # By default, build with Vulkan support on desktop platforms, although clients must request to use
 # it at run time.
-if (WIN32 OR WEBGL OR IOS)
+if (WEBGL OR IOS)
     option(FILAMENT_SUPPORTS_VULKAN "Include the Vulkan backend" OFF)
 else()
     option(FILAMENT_SUPPORTS_VULKAN "Include the Vulkan backend" ON)
@@ -532,12 +532,12 @@ function(list_licenses OUTPUT MODULES)
             message(AUTHOR_WARNING "${license_path} not found. You can ignore this warning if you have devendored ${module}.")
         endif()
     endforeach()
-    configure_file(${FILAMENT}/build/licenses.inc.in ${OUTPUT})
+    configure_file(${FILAMENT}/config/licenses.inc.in ${OUTPUT})
 endfunction(list_licenses)
 
-set(COMBINE_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/build/linux/combine-static-libs.sh")
+set(COMBINE_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/config/linux/combine-static-libs.sh")
 if (WIN32)
-    set(COMBINE_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/build/windows/combine-static-libs.bat")
+    set(COMBINE_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/config/windows/combine-static-libs.bat")
     set(CMAKE_AR "lib.exe")
 endif()
 
